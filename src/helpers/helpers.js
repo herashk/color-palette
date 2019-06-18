@@ -17,7 +17,7 @@ function generateColorPalette(starter) {
         let scale = getScale(color.color, 10).reverse(); // this makes it come from light to dark
         for (let i in scale) { // 10 colors
             newPalette.colors[levels[i]].push({
-                name: `{color.name} ${levels[i]}`,
+                name: `${color.name} ${levels[i]}`,
                 id: color.name.toLowerCase().replace(/ /g, '-'),
                 hex: scale[i],
                 rgb: chroma(scale[i]).css(),
