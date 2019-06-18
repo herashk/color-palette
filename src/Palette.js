@@ -24,17 +24,21 @@ export default class Palette extends Component {
 
     render() {
         // the [100], [200] values will change with a slider
-        const { colors } = this.props.palette;
+        const { colors, paletteName, emoji } = this.props.palette;
         const { level, format } = this.state;
         const colorBoxes = colors[level].map(color => (
-            <ColorBox background={color[format]} name={color.name} key={`${color[format]} + ${color.name}`}/>
+            <ColorBox background={color[format]} name={color.name} key={color.id}/>
         ));
         return (
             <div className="Palette">
                 <Navbar level={level} changeLevel={this.changeLevel} changeColorFormat={this.changeColorFormat}/>
-                <div className="Palette-Colors">
+                <div className="palette-colors">
                   {colorBoxes}
                 </div>
+                <footer className="palette-footer">
+                    {paletteName}
+                    <span className="emoji">{emoji}</span>
+                </footer>
             </div>
         )
     }
