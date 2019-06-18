@@ -36,7 +36,7 @@ export default class Navbar extends Component {
         return (
             <header className="Navbar">
                 <div className="logo">
-                    <Link to="/">Palette Generator</Link>
+                    <Link to="/">Color Picker</Link>
                 </div>
                 <div className="slider-container">
                     <span>Level: {level}</span>
