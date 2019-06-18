@@ -9,7 +9,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(generateColorPalette(seedColors[3]));
     return (
       <div className="App">
         <Palette palette={generateColorPalette(seedColors[4])} />
