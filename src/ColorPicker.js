@@ -2,8 +2,26 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { withStyles } from "@material-ui/core/styles";
 
-export default class ColorPicker extends Component {
+const styles = {
+    picker: {
+        width: "100% !important",
+        marginTop: "2rem"
+    },
+    addColor: {
+        width: "100%",
+        padding: "0.5rem",
+        marginTop: "1rem",
+        fontSize: "2rem"
+    },
+    colorInput: {
+        width: "100%",
+        height: "70px",
+    }
+};
+
+class ColorPicker extends Component {
     constructor(props) {
         super(props);
 
@@ -52,20 +70,25 @@ export default class ColorPicker extends Component {
     }
 
     render() {
-        const { paletteFull } = this.props;
+        const { paletteFull, classes } = this.props;
         const { currentColor, newColorName } = this.state;
         return (
             <div>
                  <ChromePicker 
                     color={currentColor} 
                     onChangeComplete={this.handleColorChange}
+                    className={classes.picker}
                 />
 
                 <ValidatorForm onSubmit={this.submitNewColor} ref="form">
                     <TextValidator 
+                        className={classes.colorInput}
+                        variant="filled"
                         value={newColorName}
+                        placeholder="color name"
                         onChange={this.handleChange}
                         name="newColorName"
+                        margin="normal"
                         validators={["required", "isColorNameUnique", "isColorUnique"]}
                         errorMessages={["enter a color name", "color name must be unique", "duplicate color already exists"]}
                     />
@@ -75,6 +98,7 @@ export default class ColorPicker extends Component {
                         type="submit"
                         style={{ backgroundColor: paletteFull ? "#e0e0e0" : currentColor }}
                         disabled={paletteFull}
+                        className={classes.addColor}
                     >
                         {paletteFull ? "Palette Full" : "Add Color"}
                     </Button>
@@ -83,3 +107,5 @@ export default class ColorPicker extends Component {
         )
     }
 }
+
+export default withStyles(styles)(ColorPicker);

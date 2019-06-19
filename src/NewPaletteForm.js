@@ -12,32 +12,12 @@ import  { arrayMove } from 'react-sortable-hoc';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPicker from './ColorPicker';
 
-
-
 const drawerWidth = 400;
 
 // taken from material UI persistent drawer styles
 const styles = theme => ({
   root: {
     display: "flex"
-  },
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20
   },
   hide: {
     display: "none"
@@ -47,7 +27,9 @@ const styles = theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    display: "flex",
+    alignItems: "center"
   },
   drawerHeader: {
     display: "flex",
@@ -72,6 +54,20 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  buttons: {
+      width: "100%"
+  },
+  button: {
+      width: "50%"
+  },
+  container: {
+      width: "90%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%"
   }
 });
 
@@ -162,7 +158,6 @@ class NewPaletteForm extends Component {
         <div className={classes.root}>
           <PaletteFormNav 
             open={open}
-            classes={classes}
             palettes={palettes}
             handleSubmit={this.handleSubmit}
             handleDrawerOpen={this.handleDrawerOpen}
@@ -182,30 +177,34 @@ class NewPaletteForm extends Component {
                     </IconButton>
                 </div>
                 <Divider />
-                <Typography variant="h4">Design Your Palette</Typography>
-                <div>
-                    <Button 
-                        variant="contained" 
-                        color="secondary"
-                        onClick={this.clearPalette}
-                    >
-                        Clear Palette
-                    </Button>
-                    <Button 
-                        variant="contained" 
-                        color="primary"
-                        onClick={this.addRandomColor}
-                        disabled={paletteFull}
-                    >
-                        {paletteFull ? "Palette Full": "Random Color"}
-                    </Button>
-                </div>
+                    <div className={classes.container}>
+                        <Typography variant="h4" gutterBottom>Design Your Palette</Typography>
+                        <div className={classes.buttons}>
+                            <Button 
+                                variant="contained" 
+                                color="secondary"
+                                onClick={this.clearPalette}
+                                className={classes.button}
+                            >
+                                Clear Palette
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                color="primary"
+                                onClick={this.addRandomColor}
+                                disabled={paletteFull}
+                                className={classes.button}
+                            >
+                                {paletteFull ? "Palette Full": "Random Color"}
+                            </Button>
+                        </div>
 
-               <ColorPicker 
-                  paletteFull={paletteFull}
-                  addNewColor={this.addNewColor}
-                  addedColors={this.state.addedColors}
-               />
+                    <ColorPicker 
+                        paletteFull={paletteFull}
+                        addNewColor={this.addNewColor}
+                        addedColors={this.state.addedColors}
+                    />
+                </div>
 
             </Drawer>
             <main
