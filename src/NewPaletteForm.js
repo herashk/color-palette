@@ -13,7 +13,9 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import { ChromePicker } from 'react-color';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import DraggableColorBox from './DraggableColorBox';
+import DraggableColorList from './DraggableColorList';
+import  { arrayMove } from 'react-sortable-hoc';
+
 
 
 const drawerWidth = 400;
@@ -94,6 +96,7 @@ class NewPaletteForm extends Component {
         this.addNewColor = this.addNewColor.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.deleteColor = this.deleteColor.bind(this);
     }
 
     componentDidMount() {
@@ -157,6 +160,13 @@ class NewPaletteForm extends Component {
             addedColors: this.state.addedColors.filter(color => color.name !== colorName)
         });
     }
+
+    // taken from react sortable hoc library
+    onSortEnd = ({ oldIndex, newIndex }) => {
+        this.setState(({ addedColors }) => ({
+            addedColors: arrayMove(addedColors, oldIndex, newIndex),
+        }));
+      };
 
     render() {
         const { classes } = this.props;
@@ -255,18 +265,12 @@ class NewPaletteForm extends Component {
                 })}
             >
                  <div className={classes.drawerHeader} />
-                {this.state.addedColors.map(color => (
-                    <DraggableColorBox 
-                        color={color.color} 
-                        name={color.name} 
-                        style={{ backgroundColor: color }}
-                        id={color.name}
-                        key={color.name}
-                        handleClick={() => this.deleteColor(color.name)}
-                    >
-                        {color.color}
-                    </DraggableColorBox>
-                ))}
+               <DraggableColorList 
+                 colors={this.state.addedColors}
+                 deleteColor={this.deleteColor}
+                 axis="xy"
+                 onSortEnd={this.onSortEnd}
+               />
             </main>
         </div>
         );
