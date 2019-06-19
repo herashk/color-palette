@@ -1,3 +1,4 @@
+
 export default {
     root: {
         backgroundColor: "#101031",
@@ -18,8 +19,13 @@ export default {
         width: "100%",
         justifyContent: "space-between",
         color: "white",
+        alignItems: "center",
         "& h1": {
             fontWeight: "400"
+        },
+        "& a": {
+            color: "white",
+            // textDecoration: "none"
         }
     },
     palettes: {
