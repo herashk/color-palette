@@ -1,10 +1,22 @@
 import React, { Component } from 'react'
+import { withStyles } from '@material-ui/styles';
 import ColorBox from './ColorBox';
 import PaletteFooter from './PaletteFooter';
 import Navbar from './Navbar';
 import './Palette.css';
 
-export default class Palette extends Component {
+const styles = {
+    Palette: {
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+    },
+    paletteColors: {
+        height: "90%"
+    },
+}
+
+class Palette extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +38,7 @@ export default class Palette extends Component {
     render() {
         // the [100], [200] values will change with a slider
         const { colors, paletteName, emoji, id } = this.props.palette;
+        const { classes } = this.props;
         const { level, format } = this.state;
         const colorBoxes = colors[level].map(color => (
             <ColorBox 
@@ -38,13 +51,13 @@ export default class Palette extends Component {
             />
         ));
         return (
-            <div className="Palette">
+            <div className={classes.Palette}>
                 <Navbar 
                     level={level} 
                     changeLevel={this.changeLevel} changeColorFormat={this.changeColorFormat}
                     showAllColors
                 />
-                <div className="palette-colors">
+                <div className={classes.paletteColors}>
                   {colorBoxes}
                 </div>
                 <PaletteFooter paletteName={paletteName} emoji={emoji}/>
@@ -52,3 +65,6 @@ export default class Palette extends Component {
         )
     }
 }
+
+
+export default  withStyles(styles)(Palette);
