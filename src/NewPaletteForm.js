@@ -12,6 +12,7 @@ import  { arrayMove } from 'react-sortable-hoc';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPicker from './ColorPicker';
 import styles from './styles/NewPaletteFormStyles';
+import seedColors from './seedColors';
 
 class NewPaletteForm extends Component {
     static defaultProps = {
@@ -21,7 +22,7 @@ class NewPaletteForm extends Component {
         super(props);
         this.state = {
           open: true,
-          addedColors: this.props.palettes[0].colors,
+          addedColors: seedColors[0].colors,
         }; 
 
         this.handleDrawerOpen = this.handleDrawerOpen.bind(this);

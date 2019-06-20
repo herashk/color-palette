@@ -41,6 +41,7 @@ class PaletteMetaForm extends Component {
 
     submitNewName() {
         this.props.handleSubmit(this.state.newPaletteName);
+        this.setState({ open: false });
     }
 
     // handleClose() {

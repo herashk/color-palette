@@ -6,6 +6,8 @@ import SingleColorPalette from './SingleColorPalette';
 import NewPaletteForm from './NewPaletteForm';
 import { Route, Switch } from "react-router-dom";
 import { generateColorPalette } from './helpers/helpers';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Page from './Page';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,33 +43,55 @@ class App extends React.Component {
 
   render() {
     return (
-      <Switch>
-        <Route
-          exact
-          path="/palette/new"
-          render={(routeProps) => <NewPaletteForm palettes={this.state.palettes} savePalette={this.savePalette} {...routeProps} />}
-        />
-        <Route 
-          exact 
-          path="/" 
-          render={(routeProps) => (<PaletteList deletePalette={this.deletePalette} palettes={this.state.palettes} {...routeProps} />)}
-        />
-        <Route 
-          exact 
-          path="/palette/:paletteId" 
-          render={(routeProps) => (<Palette palette={generateColorPalette(this.findPalette(routeProps.match.params.paletteId))} />)}
-        />
-        <Route 
-          exact
-          path="/palette/:paletteId/:colorId"
-          render={(routeProps) => (<SingleColorPalette palette={generateColorPalette(this.findPalette(routeProps.match.params.paletteId))} colorId={routeProps.match.params.colorId } />)}
-        />
-      </Switch>
-
-
-      // <div className="App">
-      //   <Palette palette={generateColorPalette(seedColors[4])} />
-      // </div>
+      <Route
+        render={({ location }) => (
+          <TransitionGroup>
+            <CSSTransition classNames="fade" timeout={500} key={location.key}> 
+              {/* passing in location and using location.key is important */}
+              <Switch location={location}>
+                <Route
+                  exact
+                  path="/palette/new"
+                  render={(routeProps) => 
+                    <Page>
+                      <NewPaletteForm palettes={this.state.palettes} savePalette={this.savePalette} {...routeProps} 
+                      />
+                    </Page>
+                  }
+                />
+                <Route 
+                  exact 
+                  path="/" 
+                  render={(routeProps) => 
+                    <Page>
+                      <PaletteList deletePalette={this.deletePalette} palettes={this.state.palettes} {...routeProps} 
+                      />
+                    </Page>
+                  }
+                />
+                <Route 
+                  exact 
+                  path="/palette/:paletteId" 
+                  render={(routeProps) => 
+                    <Page>
+                      <Palette palette={generateColorPalette(this.findPalette(routeProps.match.params.paletteId))} />
+                    </Page>
+                  }
+                />
+                <Route 
+                  exact
+                  path="/palette/:paletteId/:colorId"
+                  render={(routeProps) => 
+                    <Page>
+                      <SingleColorPalette palette={generateColorPalette(this.findPalette(routeProps.match.params.paletteId))} colorId={routeProps.match.params.colorId } />
+                    </Page>
+                  }
+                />
+              </Switch>
+            </CSSTransition>
+          </TransitionGroup>
+        )}
+      />
     );
   }
 }
