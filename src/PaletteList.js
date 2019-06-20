@@ -29,7 +29,7 @@ class PaletteList extends Component {
     }
 
     openDialog(id) {
-        this.setState({ openDeleteDialog: true, deletingId: id });
+        this.setState({ openDeleteDialog: true, deletingId: id }); // setting deletingId from what was passed up from MiniPalette
     }
 
     closeDialog() {
